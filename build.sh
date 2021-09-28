@@ -63,3 +63,15 @@ git submodule update --init
 autoreconf -fi
 ./configure --with-oniguruma=builtin --disable-maintainer-mode --prefix=${PREFIX}
 make install
+
+# https://github.com/github/hub
+# this build requires a go toolchain
+cd $BUILD_DIR
+rm -fr hub
+git clone \
+  --config transfer.fsckobjects=false \
+  --config receive.fsckobjects=false \
+  --config fetch.fsckobjects=false \
+  https://github.com/github/hub.git
+cd hub
+make install prefix=${PREFIX}
